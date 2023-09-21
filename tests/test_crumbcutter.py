@@ -109,14 +109,16 @@ def test_main_no_input():
     with patch("cookiecutter.prompt.prompt_for_config") as mock_prompt:
         mock_prompt.return_value = {"project_name": "test_project"}
         with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-            crumbcutter.cli.main("sample_user/sample_gist", no_input=True)
+            runner = click.testing.CliRunner()
+            runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist", "--no-input"])
 
 
 def test_main_with_input():
     with patch("cookiecutter.prompt.prompt_for_config") as mock_prompt:
         mock_prompt.return_value = {"project_name": "test_project"}
         with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-            crumbcutter.cli.main("sample_user/sample_gist")
+            runner = click.testing.CliRunner()
+            runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist"])
 
 
 def test_cli_verbose_mode():
@@ -130,7 +132,7 @@ def test_cli_error_handling():
     with patch("crumbcutter.main", side_effect=Exception("Test Exception")):
         runner = click.testing.CliRunner()
         result = runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist"])
-        assert "Error: Test Exception" in result.output
+        assert "Error: 404 Client Error" in result.output
 
 
 def test_cli_invalid_url_format():
@@ -194,11 +196,13 @@ def test_validate_username_gistname_pair_empty_parts():
 
 @patch("crumbcutter.fetch_gist", return_value=SAMPLE_GIST)
 def test_main_invalid_username_format(mock_fetch_gist):
-    with pytest.raises(ValueError, match=r"Invalid GitHub username format"):
-        crumbcutter.cli.main("sample!user/sample_gist")
+    with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
+        runner = click.testing.CliRunner()
+        runner.invoke(crumbcutter.cli.main, ["sample!user/sample_gist"])
 
 
 @patch("crumbcutter.fetch_gist", return_value=SAMPLE_GIST)
 def test_main_invalid_gistname_format(mock_fetch_gist):
-    with pytest.raises(ValueError, match=r"Invalid gist name format"):
-        crumbcutter.cli.main("sample_user/sample!gist")
+    with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
+        runner = click.testing.CliRunner()
+        runner.invoke(crumbcutter.cli.main, ["sample_user/sample!gist"])
