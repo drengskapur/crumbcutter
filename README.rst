@@ -75,7 +75,7 @@ Output
        </body>
    </html>
 
-Use ``-x`` For eXtremely Fast Rendering
+TIP: Use ``-x`` For eXtremely Fast Rendering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
@@ -95,9 +95,10 @@ Use ``-x`` For eXtremely Fast Rendering
        </body>
    </html>
 
-*To template more files and folders, use `cookiecutter <https://github.com/cookiecutter/cookiecutter>`_*
+Use `cookiecutter <https://github.com/cookiecutter/cookiecutter>`_ for more files and folders.
 
 License
 ^^^^^^^
 
-This project is licensed under the MIT License - see the `LICENSE.md <./LICENSE.md>`_ file for details.
+This project is licensed under the MIT License. See `LICENSE.md <./LICENSE.md>`_.
+
