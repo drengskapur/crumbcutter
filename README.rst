@@ -20,10 +20,10 @@ crumbcutter
 Example Gist: ``crumbcutter-index``
 -----------------------------------
 
+.. image:: gist.png
+
 crumbcutter.json
 ^^^^^^^^^^^^^^^^
-
-.. image:: gist.png
 
 .. code-block:: json
 
