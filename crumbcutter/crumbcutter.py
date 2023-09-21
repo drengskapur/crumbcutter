@@ -134,7 +134,7 @@ def validate_username_gistname_pair(pair: str) -> tuple:
     return username, gist_name
 
 
-def main(username_gistname_pair: str, output_dir: str = ".", no_input: bool = False):
+def run(username_gistname_pair: str, output_dir: str = ".", no_input: bool = False):
     """
     Main function to fetch a gist by a given username and gist name, then render and save its content.
 

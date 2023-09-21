@@ -109,33 +109,33 @@ def test_main_no_input():
     with patch("cookiecutter.prompt.prompt_for_config") as mock_prompt:
         mock_prompt.return_value = {"project_name": "test_project"}
         with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-            crumbcutter.main("sample_user/sample_gist", no_input=True)
+            crumbcutter.run("sample_user/sample_gist", no_input=True)
 
 
 def test_main_with_input():
     with patch("cookiecutter.prompt.prompt_for_config") as mock_prompt:
         mock_prompt.return_value = {"project_name": "test_project"}
         with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-            crumbcutter.main("sample_user/sample_gist")
+            crumbcutter.run("sample_user/sample_gist")
 
 
 def test_cli_verbose_mode():
     runner = click.testing.CliRunner()
     with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-        result = runner.invoke(crumbcutter.main, ["sample_user/sample_gist", "-v"])
+        result = runner.invoke(crumbcutter.run, ["sample_user/sample_gist", "-v"])
         assert "Running in verbose mode..." in result.output
 
 
 def test_cli_error_handling():
     with patch("crumbcutter.main", side_effect=Exception("Test Exception")):
         runner = click.testing.CliRunner()
-        result = runner.invoke(crumbcutter.main, ["sample_user/sample_gist"])
+        result = runner.invoke(crumbcutter.run, ["sample_user/sample_gist"])
         assert "Error: Test Exception" in result.output
 
 
 def test_cli_invalid_url_format():
     runner = click.testing.CliRunner()
-    result = runner.invoke(crumbcutter.main, ["invalid_format"])
+    result = runner.invoke(crumbcutter.run, ["invalid_format"])
     assert "Invalid format for <username>/<gist_description>." in result.output
 
 
@@ -195,10 +195,10 @@ def test_validate_username_gistname_pair_empty_parts():
 @patch("crumbcutter.fetch_gist", return_value=SAMPLE_GIST)
 def test_main_invalid_username_format(mock_fetch_gist):
     with pytest.raises(ValueError, match=r"Invalid GitHub username format"):
-        crumbcutter.main("sample!user/sample_gist")
+        crumbcutter.run("sample!user/sample_gist")
 
 
 @patch("crumbcutter.fetch_gist", return_value=SAMPLE_GIST)
 def test_main_invalid_gistname_format(mock_fetch_gist):
     with pytest.raises(ValueError, match=r"Invalid gist name format"):
-        crumbcutter.main("sample_user/sample!gist")
+        crumbcutter.run("sample_user/sample!gist")

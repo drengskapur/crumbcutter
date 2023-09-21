@@ -13,4 +13,4 @@ def _get_version() -> str:
 __version__ = _get_version()
 
 from .cli import main
-from .crumbcutter import extract_content_from_gist, fetch_gist, main, validate_gist, validate_username_gistname_pair
+from .crumbcutter import extract_content_from_gist, fetch_gist, run, validate_gist, validate_username_gistname_pair

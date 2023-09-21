@@ -29,9 +29,9 @@ def main(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: 
 
         template a single-file GitHub gist
 
-    - Template ONE gist file
+    - Template ONE gist file.
     - Nothing else!
-    - Optional `crumbcutter.json` for default values
+    - Optional crumbcutter.json for default values.
 
     Use cookiecutter for more than one file.
 
@@ -49,7 +49,7 @@ def main(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: 
         click.echo("Running in verbose mode...")
         logging.basicConfig(level=logging.DEBUG)
     try:
-        crumbcutter.main(username_gistname_pair, output_dir, no_input)
+        crumbcutter.run(username_gistname_pair, output_dir, no_input)
     except ValueError:
         click.echo("Invalid format for <username>/<gist_description>.")
     except Exception as e:
