@@ -55,7 +55,7 @@ Output
 
 .. code-block:: bash
 
-   foo@bar:~$ crumbcutter octocat/crumbcutter-index
+   foo@bar:~$ crumbcutter jonathanagustin/crumbcutter-index
      [1/2] project_name (Index): My Project
      [2/2] author (Anonymous): Me
 
@@ -80,7 +80,7 @@ TIP: Use ``-x`` For eXtremely Fast Rendering
 
 .. code-block:: bash
 
-   foo@bar:~$ crumbcutter octocat/crumbcutter-template -x
+   foo@bar:~$ crumbcutter jonathanagustin/crumbcutter-template -x
    foo@bar:~$ cat index.html
    <!doctype html>
    <html>
