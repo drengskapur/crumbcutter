@@ -4,7 +4,6 @@ import logging
 import pathlib
 import re
 import requests
-import jsonschema
 from cookiecutter.prompt import prompt_for_config
 from jinja2 import Environment, FileSystemLoader
 
@@ -38,14 +37,6 @@ def fetch_gist(username: str, gist_name: str) -> dict:
         gists = response.json()
         if not gists:
             break
-
-        # Validate response against the schema
-        with open("gist_schema.json", "r") as f:
-            GIST_SCHEMA = json.load(f)
-        try:
-            jsonschema.validate(gists, GIST_SCHEMA)
-        except jsonschema.ValidationError as e:
-            raise ValueError(f"Invalid gist data: {e.message}")
 
         for gist in gists:
             if gist["description"] == gist_name:

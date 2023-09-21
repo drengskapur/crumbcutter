@@ -1,5 +1,7 @@
 bin/
 log.txt
+act
+.actrc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
