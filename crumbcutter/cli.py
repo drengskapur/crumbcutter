@@ -23,7 +23,7 @@ import crumbcutter
     help="Verbose output for debugging.",
 )
 @click.version_option(version="1.0.0", prog_name="crumbcutter")
-def cli(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: bool):
+def main(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: bool):
     """
     crumbcutter
 
@@ -59,4 +59,4 @@ def cli(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: b
 
 
 if __name__ == "__main__":
-    cli()
+    main()

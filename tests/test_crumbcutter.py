@@ -122,20 +122,20 @@ def test_main_with_input():
 def test_cli_verbose_mode():
     runner = click.testing.CliRunner()
     with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-        result = runner.invoke(crumbcutter.cli, ["sample_user/sample_gist", "-v"])
+        result = runner.invoke(crumbcutter.main, ["sample_user/sample_gist", "-v"])
         assert "Running in verbose mode..." in result.output
 
 
 def test_cli_error_handling():
     with patch("crumbcutter.main", side_effect=Exception("Test Exception")):
         runner = click.testing.CliRunner()
-        result = runner.invoke(crumbcutter.cli, ["sample_user/sample_gist"])
+        result = runner.invoke(crumbcutter.main, ["sample_user/sample_gist"])
         assert "Error: Test Exception" in result.output
 
 
 def test_cli_invalid_url_format():
     runner = click.testing.CliRunner()
-    result = runner.invoke(crumbcutter.cli, ["invalid_format"])
+    result = runner.invoke(crumbcutter.main, ["invalid_format"])
     assert "Invalid format for <username>/<gist_description>." in result.output
 
 
