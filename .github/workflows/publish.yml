@@ -1,11 +1,11 @@
-name: Publish to TestPyPI
+name: Publish to PyPI
 
 'on':
     release:
-        types: [prereleased]
+        types: [released]
 
 jobs:
-  test-build-and-publish:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -24,9 +24,8 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
 
-    - name: Publish package on TestPyPI
+    - name: Publish package on PyPI
       uses: pypa/gh-action-pypi-publish@v1
       with:
         user: __token__
-        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+        password: ${{ secrets.PYPI_API_TOKEN }}

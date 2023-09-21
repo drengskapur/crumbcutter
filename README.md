@@ -18,7 +18,7 @@ crumbcutter <username>/<gist-name>
 
 ## Example Gist: `crumbcutter-index`
 
-![gist.png](gist.png)
+![gist.png](https://imagedelivery.net/XJ_Mp6gVy44G9qfErYd3Hg/26ced78c-2754-4221-6bc6-e93871784700/public)
 
 ### crumbcutter.json
 
