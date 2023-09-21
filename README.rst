@@ -76,7 +76,7 @@ Output
    </html>
 
 TIP: Use ``-x`` For eXtremely Fast Rendering
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -101,4 +101,3 @@ License
 ^^^^^^^
 
 This project is licensed under the MIT License. See `LICENSE.md <./LICENSE.md>`_.
-
