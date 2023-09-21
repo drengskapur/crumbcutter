@@ -1,36 +1,104 @@
 =========
 crumbcutter
-=========
+===========
 
+- Template ONE gist file
+- Nothing else!
+- Optional ``crumbcutter.json`` for default values
 
-.. image:: https://img.shields.io/pypi/v/crumbcutter.svg
-        :target: https://pypi.python.org/pypi/crumbcutter
+.. code-block:: bash
 
-.. image:: https://img.shields.io/travis/drengskapur/crumbcutter.svg
-        :target: https://travis-ci.com/drengskapur/crumbcutter
+   pip install crumbcutter -U
 
-.. image:: https://readthedocs.org/projects/crumbcutter/badge/?version=latest
-        :target: https://crumbcutter.readthedocs.io/en/latest/?version=latest
-        :alt: Documentation Status
+.. code-block:: console
 
+   crumbcutter <username>/<gist-name>
 
-.. image:: https://pyup.io/repos/github/drengskapur/crumbcutter/shield.svg
-     :target: https://pyup.io/repos/github/drengskapur/crumbcutter/
-     :alt: Updates
+   -o, --output-dir : Directory where file will render to. Defaults to current directory.
+   -x, --no-input   : eXtremely fast rendering. No user input. Use default values.
+   -v, --verbose    : Verbose output for debugging.
 
+Example Gist: ``crumbcutter-index``
+-----------------------------------
 
+crumbcutter.json
+^^^^^^^^^^^^^^^^
 
-cookiecutter for GitHub Gist
+.. image:: gist.png
 
+.. code-block:: json
 
-* Free software: MIT license
-* Documentation: https://crumbcutter.readthedocs.io
+   {
+     "project_name": "Crumbcutter Website Simple",
+     "author": "Anonymous"
+   }
 
+index.html
+^^^^^^^^^^
 
-Features
---------
+.. code-block:: html
 
-* TODO
+   <!doctype html>
+   <html>
+       <head>
+           <meta charset="utf-8">
+           <title>{{ crumbcutter.project_name }}</title>
+       </head>
 
-Credits
--------
+       <body>
+           <h1>{{ cookiecutter.project_name }}</h1>
+           <p>by {{ crumbcutter.author }}</p>
+       </body>
+   </html>
+
+Output
+^^^^^^
+
+.. code-block:: bash
+
+   foo@bar:~$ crumbcutter octocat/crumbcutter-index
+     [1/2] project_name (Index): My Project
+     [2/2] author (Anonymous): Me
+
+.. code-block:: bash
+
+   foo@bar:~$ cat index.html
+   <!doctype html>
+   <html>
+       <head>
+           <meta charset="utf-8">
+           <title>My Project</title>
+       </head>
+
+       <body>
+           <h1>My Project</h1>
+           <p>by Me</p>
+       </body>
+   </html>
+
+Use ``-x`` For eXtremely Fast Rendering
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   foo@bar:~$ crumbcutter octocat/crumbcutter-template -x
+   foo@bar:~$ cat index.html
+   <!doctype html>
+   <html>
+       <head>
+           <meta charset="utf-8">
+           <title>Index</title>
+       </head>
+
+       <body>
+           <h1>Index</h1>
+           <p>by Anonymous</p>
+       </body>
+   </html>
+
+*To template more files and folders, use `cookiecutter <https://github.com/cookiecutter/cookiecutter>`_*
+
+License
+^^^^^^^
+
+This project is licensed under the MIT License - see the `LICENSE.md <./LICENSE.md>`_ file for details.
