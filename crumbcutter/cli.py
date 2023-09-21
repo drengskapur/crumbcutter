@@ -13,34 +13,37 @@ import crumbcutter
     default=".",
     type=click.Path(),
     show_default=True,
-    help="Directory where the rendered file will be saved.",
+    help="Directory where file will render to. Defaults to current directory.",
 )
-@click.option("--no-input", is_flag=True, help="Do not prompt for user input, use default values.")
+@click.option("--no-input", "-x", is_flag=True, help="eXtremely fast rendering. No user input. Use default values.")
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
-    help="Provide more verbose output for debugging purposes.",
+    help="Verbose output for debugging.",
 )
 @click.version_option(version="1.0.0", prog_name="crumbcutter")
 def cli(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: bool):
     """
-    crumbcutter: template a single-file GitHub gist
+    crumbcutter
 
-    This tool is intended for single-file Gist templates.
-    If you need to template more than one file, cookiecutter
-    should be used instead.
+        template a single-file GitHub gist
 
-    Given a GitHub username and gist description (functioning as
-    the "name" of the gist), crumbcutter fetches the gist,
-    prompts for required inputs, and renders the template.
-    The rendered file is then saved to a specified directory
-    or current working directory if no directory is specified.
+    - Template ONE gist file
+    - Nothing else!
+    - Optional `crumbcutter.json` for default values
 
-    Example Usage:
+    Use cookiecutter for more than one file.
 
-        crumbcutter <username>/<gist_description>
-        crumbcutter octocat/index-html
+    Given a GitHub username and gist name,
+    crumbcutter fetches the gist, prompts for required inputs,
+    and renders the template. The file is saved to a specified
+    directory or current working directory if none specified.
+
+    Usage:
+
+        crumbcutter <username>/<gist-name>
+        crumbcutter octocat/crumbcutter-file
     """
     if verbose:
         click.echo("Running in verbose mode...")
