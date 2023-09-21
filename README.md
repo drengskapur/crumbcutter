@@ -1,8 +1,8 @@
 # crumbcutter
 
-- Template ONE gist file
+- Template ONE gist file.
 - Nothing else!
-- Optional `crumbcutter.json` for default values
+- Optional `crumbcutter.json` for default values.
 
 ```bash
 pip install crumbcutter -U

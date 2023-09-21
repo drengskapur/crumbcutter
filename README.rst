@@ -1,9 +1,9 @@
 crumbcutter
 ===========
 
-- Template ONE gist file
+- Template ONE gist file.
 - Nothing else!
-- Optional ``crumbcutter.json`` for default values
+- Optional ``crumbcutter.json`` for default values.
 
 .. code-block:: bash
 

@@ -26,7 +26,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
     ],
-    description="Template ONE gist file. Nothing else! Optional crumbcutter.json for default values",
+    description="Template ONE gist file. Nothing else! Optional crumbcutter.json for default values.",
     entry_points={
         "console_scripts": [
             "crumbcutter=crumbcutter.cli:main",
@@ -46,6 +46,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/drengskapur/crumbcutter",
-    version="0.1.5",
+    version="0.1.6",
     zip_safe=False,
 )
