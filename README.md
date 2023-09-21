@@ -70,7 +70,7 @@ foo@bar:~$ cat index.html
 </html>
 ```
 
-### Use `-x` For eXtremely Fast Rendering
+### TIP: Use `-x` For eXtremely Fast Rendering
 
 ```bash
 foo@bar:~$ crumbcutter octocat/crumbcutter-template -x
