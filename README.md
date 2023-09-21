@@ -18,6 +18,8 @@ crumbcutter <username>/<gist-name>
 
 ## Example Gist: `crumbcutter-index`
 
+![gist.png](gist.png)
+
 ### crumbcutter.json
 
 ```json
@@ -87,8 +89,8 @@ foo@bar:~$ cat index.html
 </html>
 ```
 
-*To template more files and folders, use [cookiecutter](https://github.com/cookiecutter/cookiecutter)*
+Use [cookiecutter](https://github.com/cookiecutter/cookiecutter) to template more files or folders.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE.md) file for details.
+This project is licensed under the MIT License. See [LICENSE.md](./LICENSE.md).
