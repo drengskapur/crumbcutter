@@ -6,7 +6,7 @@ import crumbcutter
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
-@click.argument("username_gistname_pair", metavar="<username>/<gist_description>")
+@click.argument("username_gistname_pair", metavar="<username>/<gist-name>")
 @click.option(
     "-o",
     "--output-dir",
@@ -22,7 +22,7 @@ import crumbcutter
     is_flag=True,
     help="Verbose output for debugging.",
 )
-@click.version_option(version="1.0.0", prog_name="crumbcutter")
+@click.version_option(version="0.1.11", prog_name="crumbcutter")
 def main(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: bool):
     """
     crumbcutter
@@ -51,7 +51,7 @@ def main(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: 
     try:
         crumbcutter.run(username_gistname_pair, output_dir, no_input)
     except ValueError:
-        click.echo("Invalid format for <username>/<gist_description>.")
+        click.echo("Invalid format <username>/<gist-name>")
     except Exception as e:
         click.echo(f"Error: {e}", err=True)
         if verbose:

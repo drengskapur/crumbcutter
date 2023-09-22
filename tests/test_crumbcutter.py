@@ -1,3 +1,6 @@
+import subprocess
+import sys
+from pathlib import Path
 from unittest.mock import patch
 
 import click
@@ -20,6 +23,18 @@ SAMPLE_GIST = {
 }
 
 SAMPLE_INVALID_GIST = {"description": "invalid_gist", "files": {}}
+
+
+def test_build():
+    base_path = Path.cwd()
+
+    # Package
+    result = subprocess.run(["python", "setup.py", "sdist", "bdist_wheel"], capture_output=True, text=True)
+    assert result.returncode == 0, f"Packaging failed with output:\n{result.stdout}\n{result.stderr}"
+
+    # Install
+    wheel_path = base_path / "dist" / "crumbcutter-0.1.11-py2.py3-none-any.whl"
+    subprocess.check_call([sys.executable, "-m", "pip", "install", str(wheel_path)])
 
 
 def mocked_requests_get(*args, **kwargs):
@@ -74,7 +89,7 @@ def test_fetch_gist_invalid_json(mock_fetch_gist):
 
 
 def test_validate_gist():
-    assert crumbcutter.validate_gist(SAMPLE_GIST) == True
+    assert crumbcutter.validate_gist(SAMPLE_GIST)
     with pytest.raises(ValueError):
         crumbcutter.validate_gist(SAMPLE_INVALID_GIST)
 
@@ -89,7 +104,7 @@ def test_extract_content_from_gist(mock_get):
 
 def test_fetch_nonexistent_gist():
     with patch("requests.get") as mock_get:
-        mock_get.return_value.json.return_value = []  # No gists returned
+        mock_get.return_value.json.return_value = []
         with pytest.raises(ValueError, match=r"Gist not found"):
             crumbcutter.fetch_gist("nonexistent_user", "nonexistent_gist")
 
@@ -138,7 +153,7 @@ def test_cli_error_handling():
 def test_cli_invalid_url_format():
     runner = click.testing.CliRunner()
     result = runner.invoke(crumbcutter.cli.main, ["invalid_format"])
-    assert "Invalid format for <username>/<gist_description>." in result.output
+    assert "Invalid format <username>/<gist-name>" in result.output
 
 
 @patch("requests.get", side_effect=mocked_requests_500_error)

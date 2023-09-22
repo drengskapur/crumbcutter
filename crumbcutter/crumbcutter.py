@@ -1,18 +1,15 @@
 # ./crumbcutter/crumbcutter.py
 import json
-import logging
 import pathlib
 import re
+
 import requests
 from cookiecutter.prompt import prompt_for_config
 from jinja2 import Environment, FileSystemLoader
 
-
 GITHUB_API_BASE_URL = "https://api.github.com"
 GIST_FETCH_LIMIT = 100
 REQUEST_TIMEOUT = 60 * 5
-
-logging.basicConfig(level=logging.INFO)
 
 
 def fetch_gist(username: str, gist_name: str) -> dict:
@@ -61,12 +58,15 @@ def validate_gist(gist: dict) -> bool:
         raise ValueError("Gist is empty")
 
     files = gist.get("files", {})
-    if "crumbcutter.json" in files:
-        if len(files) != 2:
-            raise ValueError("Gist should have at most two files: crumbcutter.json and the template.")
-    else:
-        if len(files) != 1:
-            raise ValueError("Gist should have only one template file if crumbcutter.json is absent.")
+
+    if not files:
+        raise ValueError("Gist has no files")
+
+    if "crumbcutter.json" not in files and len(files) != 1:
+        raise ValueError("Gist should have only one template file if crumbcutter.json is absent.")
+
+    if "crumbcutter.json" in files and len(files) != 2:
+        raise ValueError("Gist should have at most two files: crumbcutter.json and the template.")
 
     return True
 
@@ -92,11 +92,10 @@ def extract_content_from_gist(gist: dict) -> tuple:
         try:
             crumbcutter_json = json.loads(crumbcutter_text)
         except json.JSONDecodeError as ex:
-            logging.warning("Invalid json: %s", ex)
+            raise ValueError(f"Invalid crumbcutter.json: {ex}")
 
     if not files:
         raise ValueError("No template file found in the gist")
-
     template_filename = list(files.keys())[0]
     template_url = files[template_filename]["raw_url"]
     template = requests.get(template_url, timeout=60 * 5).text
@@ -151,11 +150,11 @@ def run(username_gistname_pair: str, output_dir: str = ".", no_input: bool = Fal
 
     crumbcutter_json, template, template_filename = extract_content_from_gist(gist)
 
-    if not no_input:
+    if no_input:
+        user_inputs = crumbcutter_json
+    else:
         context = {"cookiecutter": crumbcutter_json}
         user_inputs = prompt_for_config(context)
-    else:
-        user_inputs = crumbcutter_json
 
     project_name = crumbcutter_json.get("project_name", gist["description"]).lower().replace(" ", "_")
     if "project_name" not in user_inputs:
