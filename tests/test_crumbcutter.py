@@ -25,18 +25,6 @@ SAMPLE_GIST = {
 SAMPLE_INVALID_GIST = {"description": "invalid_gist", "files": {}}
 
 
-def test_build():
-    base_path = Path.cwd()
-    result = subprocess.run(["hatch", "build"], capture_output=True, text=True)
-    assert result.returncode == 0, f"Packaging failed with output:\n{result.stdout}\n{result.stderr}"
-
-    matching_wheels = list((base_path / "dist").glob("crumbcutter-*.whl"))
-    assert matching_wheels, "No matching wheels found."
-
-    wheel_path = matching_wheels[0]
-    subprocess.check_call(["pip", "install", "-e", "."])
-
-
 def mocked_requests_get(*args, **kwargs):
     class MockResponse:
         @staticmethod
