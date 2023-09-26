@@ -1,5 +1,8 @@
 # crumbcutter
 
+[![PyPI - Version](https://img.shields.io/pypi/v/crumbcutter.svg)](https://pypi.org/project/crumbcutter)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/crumbcutter.svg)](https://pypi.org/project/crumbcutter)
+
 - Template ONE gist file.
 - Nothing else!
 - Optional `crumbcutter.json` for default values.
@@ -93,4 +96,4 @@ Use [cookiecutter](https://github.com/cookiecutter/cookiecutter) to template mor
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE.md](./LICENSE.md).
+`crumbcutter` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
