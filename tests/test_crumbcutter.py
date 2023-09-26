@@ -34,7 +34,7 @@ def test_build():
     assert matching_wheels, "No matching wheels found."
 
     wheel_path = matching_wheels[0]
-    subprocess.check_call([sys.executable, "-m", "pip", "install", str(wheel_path)])
+    subprocess.check_call(["pip", "install", "-e", "."])
 
 
 def mocked_requests_get(*args, **kwargs):
