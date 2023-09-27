@@ -39,4 +39,4 @@ jobs:
           pip install -r requirements.txt hatch pytest
 
       - name: Test with pytest
-        run: test run hatch -vv
+        run: hatch run test -vv
