@@ -1,5 +1,3 @@
-import sys
-import subprocess
 from unittest.mock import patch
 
 import click
