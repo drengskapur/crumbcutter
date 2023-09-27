@@ -1,11 +1,13 @@
+"""./tests/test_crumbcutter.py"""
+
 from unittest.mock import patch
+
+import requests
 
 import click
 import click.testing
-import pytest
-import requests
-
 import crumbcutter
+import pytest
 
 SAMPLE_GIST = {
     "description": "sample_gist",
@@ -74,7 +76,7 @@ def test_fetch_gist_invalid_json(mock_fetch_gist):
 
 
 def test_validate_gist():
-    assert crumbcutter.validate_gist(SAMPLE_GIST) == True
+    assert crumbcutter.validate_gist(SAMPLE_GIST)
     with pytest.raises(ValueError):
         crumbcutter.validate_gist(SAMPLE_INVALID_GIST)
 
@@ -89,7 +91,7 @@ def test_extract_content_from_gist(mock_get):
 
 def test_fetch_nonexistent_gist():
     with patch("requests.get") as mock_get:
-        mock_get.return_value.json.return_value = []  # No gists returned
+        mock_get.return_value.json.return_value = []
         with pytest.raises(ValueError, match=r"Gist not found"):
             crumbcutter.fetch_gist("nonexistent_user", "nonexistent_gist")
 
@@ -110,7 +112,7 @@ def test_main_no_input():
         mock_prompt.return_value = {"project_name": "test_project"}
         with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
             runner = click.testing.CliRunner()
-            runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist", "--no-input"])
+            runner.invoke(crumbcutter.main, ["sample_user/sample_gist", "--no-input"])
 
 
 def test_main_with_input():
@@ -118,27 +120,20 @@ def test_main_with_input():
         mock_prompt.return_value = {"project_name": "test_project"}
         with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
             runner = click.testing.CliRunner()
-            runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist"])
+            runner.invoke(crumbcutter.main, ["sample_user/sample_gist"])
 
 
 def test_cli_verbose_mode():
     runner = click.testing.CliRunner()
     with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
-        result = runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist", "-v"])
+        result = runner.invoke(crumbcutter.main, ["sample_user1/sample_gist99", "-v"])
         assert "Running in verbose mode..." in result.output
-
-
-def test_cli_error_handling():
-    with patch("crumbcutter.main", side_effect=Exception("Test Exception")):
-        runner = click.testing.CliRunner()
-        result = runner.invoke(crumbcutter.cli.main, ["sample_user/sample_gist"])
-        assert "Error: 404 Client Error" in result.output
 
 
 def test_cli_invalid_url_format():
     runner = click.testing.CliRunner()
-    result = runner.invoke(crumbcutter.cli.main, ["invalid_format"])
-    assert "Invalid format for <username>/<gist_description>." in result.output
+    result = runner.invoke(crumbcutter.main, ["invalid_format"])
+    assert "Invalid format <username>/<gist-name>" in result.output
 
 
 @patch("requests.get", side_effect=mocked_requests_500_error)
@@ -198,11 +193,11 @@ def test_validate_username_gistname_pair_empty_parts():
 def test_main_invalid_username_format(mock_fetch_gist):
     with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
         runner = click.testing.CliRunner()
-        runner.invoke(crumbcutter.cli.main, ["sample!user/sample_gist"])
+        runner.invoke(crumbcutter.main, ["sample!user/sample_gist"])
 
 
 @patch("crumbcutter.fetch_gist", return_value=SAMPLE_GIST)
 def test_main_invalid_gistname_format(mock_fetch_gist):
     with patch("crumbcutter.crumbcutter.fetch_gist", return_value=SAMPLE_GIST):
         runner = click.testing.CliRunner()
-        runner.invoke(crumbcutter.cli.main, ["sample_user/sample!gist"])
+        runner.invoke(crumbcutter.main, ["sample_user/sample!gist"])

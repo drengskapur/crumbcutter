@@ -1,8 +1,7 @@
-# crumbcutter
+# CrumbCutter
 
 - Template ONE gist file.
 - Nothing else!
-- Optional `crumbcutter.json` for default values.
 
 ```bash
 pip install crumbcutter -U
@@ -10,13 +9,9 @@ pip install crumbcutter -U
 
 ```console
 crumbcutter <username>/<gist-name>
-
--o, --output-dir : Directory where file will render to. Defaults to current directory.
--x, --no-input   : eXtremely fast rendering. No user input. Use default values.
--v, --verbose    : Verbose output for debugging.
 ```
 
-## Example Gist: `crumbcutter-index`
+## Example Gist
 
 ![gist.png](https://imagedelivery.net/XJ_Mp6gVy44G9qfErYd3Hg/26ced78c-2754-4221-6bc6-e93871784700/public)
 
@@ -48,8 +43,8 @@ crumbcutter <username>/<gist-name>
 
 ## Output
 
-```bash
-foo@bar:~$ crumbcutter jonathanagustin/crumbcutter-index
+```sh
+foo@bar:~$ crumbcutter octocat/crumbcutter-index
   [1/2] project_name (Index): My Project
   [2/2] author (Anonymous): Me
 ```
@@ -89,8 +84,12 @@ foo@bar:~$ cat index.html
 </html>
 ```
 
+## Flags
+
+```
+-o, --output-dir : Directory where file will render to. Defaults to current directory.
+-x, --no-input   : eXtremely fast rendering. No user input. Use default values.
+-v, --verbose    : Verbose output for debugging.
+```
+
 Use [cookiecutter](https://github.com/cookiecutter/cookiecutter) to template more files or folders.
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE.md](./LICENSE.md).
