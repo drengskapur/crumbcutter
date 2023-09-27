@@ -13,10 +13,6 @@ pip install crumbcutter -U
 
 ```console
 crumbcutter <username>/<gist-name>
-
--o, --output-dir : Directory where file will render to. Defaults to current directory.
--x, --no-input   : eXtremely fast rendering. No user input. Use default values.
--v, --verbose    : Verbose output for debugging.
 ```
 
 ## Example Gist: `crumbcutter-index`
@@ -51,7 +47,7 @@ crumbcutter <username>/<gist-name>
 
 ## Output
 
-```bash
+```sh
 foo@bar:~$ crumbcutter octocat/crumbcutter-index
   [1/2] project_name (Index): My Project
   [2/2] author (Anonymous): Me
@@ -92,8 +88,12 @@ foo@bar:~$ cat index.html
 </html>
 ```
 
+## Flags
+
+```
+-o, --output-dir : Directory where file will render to. Defaults to current directory.
+-x, --no-input   : eXtremely fast rendering. No user input. Use default values.
+-v, --verbose    : Verbose output for debugging.
+```
+
 Use [cookiecutter](https://github.com/cookiecutter/cookiecutter) to template more files or folders.
-
-## License
-
-`crumbcutter` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
