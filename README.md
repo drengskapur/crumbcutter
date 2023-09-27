@@ -1,11 +1,11 @@
-# crumbcutter
+# CrumbCutter
 
+[![CI](https://github.com/drengskapur/crumbcutter/actions/workflows/ci.yml/badge.svg)](https://github.com/drengskapur/crumbcutter/actions/workflows/ci.yml)
 [![PyPI - Version](https://img.shields.io/pypi/v/crumbcutter.svg)](https://pypi.org/project/crumbcutter)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/crumbcutter.svg)](https://pypi.org/project/crumbcutter)
 
 - Template ONE gist file.
 - Nothing else!
-- Optional `crumbcutter.json` for default values.
 
 ```bash
 pip install crumbcutter -U

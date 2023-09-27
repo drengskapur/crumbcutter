@@ -1,9 +1,12 @@
-# ./crumbcutter/crumbcutter.py
+"""./crumbcutter/crumbcutter.py"""
 import json
+import logging
 import pathlib
 import re
 
 import requests
+
+import click
 from cookiecutter.prompt import prompt_for_config
 from jinja2 import Environment, FileSystemLoader
 
@@ -77,9 +80,9 @@ def extract_content_from_gist(gist: dict) -> tuple:
 
     :param gist: The gist data fetched from GitHub.
     :type gist: dict
-    :return: A tuple containing the configuration (if any), the template content, and the template filename.
+    :return: A tuple containing the configuration (if any), template content, and template filename.
     :rtype: tuple
-    :raises ValueError: If no template file is found in the gist or if there's an error parsing the configuration.
+    :raises ValueError: If no template file or if there's an error parsing.
     """
     files = gist.get("files", {})
 
@@ -92,7 +95,7 @@ def extract_content_from_gist(gist: dict) -> tuple:
         try:
             crumbcutter_json = json.loads(crumbcutter_text)
         except json.JSONDecodeError as ex:
-            raise ValueError(f"Invalid crumbcutter.json: {ex}")
+            raise ValueError(f"Invalid crumbcutter.json: {ex}") from ex
 
     if not files:
         raise ValueError("No template file found in the gist")
@@ -156,7 +159,8 @@ def run(username_gistname_pair: str, output_dir: str = ".", no_input: bool = Fal
         context = {"cookiecutter": crumbcutter_json}
         user_inputs = prompt_for_config(context)
 
-    project_name = crumbcutter_json.get("project_name", gist["description"]).lower().replace(" ", "_")
+    raw_project_name = crumbcutter_json.get("project_name", gist["description"])
+    project_name = raw_project_name.lower().replace(" ", "_")
     if "project_name" not in user_inputs:
         user_inputs["project_name"] = project_name
 
@@ -166,3 +170,59 @@ def run(username_gistname_pair: str, output_dir: str = ".", no_input: bool = Fal
 
     output_path = pathlib.Path(output_dir) / template_filename
     output_path.write_text(rendered_content)
+
+
+@click.command(context_settings={"help_option_names": ["-h", "--help"]})
+@click.argument("username_gistname_pair", metavar="<username>/<gist-name>")
+@click.option(
+    "-o",
+    "--output-dir",
+    default=".",
+    type=click.Path(),
+    show_default=True,
+    help="Directory where file will render to. Defaults to current directory.",
+)
+@click.option("--no-input", "-x", is_flag=True, help="eXtremely fast rendering. No user input. Use default values.")
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Verbose output for debugging.",
+)
+@click.version_option(version="0.1.11", prog_name="crumbcutter")
+def main(username_gistname_pair: str, output_dir: str, no_input: bool, verbose: bool):
+    """
+    crumbcutter
+
+        template a single-file GitHub gist
+
+    - Template ONE gist file.
+    - Nothing else!
+
+    Use cookiecutter for more than one file.
+
+    Given a GitHub username and gist name,
+    crumbcutter fetches the gist, prompts for required inputs,
+    and renders the template. The file is saved to a specified
+    directory or current working directory if none specified.
+
+    Usage:
+
+        crumbcutter <username>/<gist-name>
+        crumbcutter octocat/crumbcutter-file
+    """
+    if verbose:
+        click.echo("Running in verbose mode...")
+        logging.basicConfig(level=logging.DEBUG)
+    try:
+        run(username_gistname_pair, output_dir, no_input)
+    except ValueError:
+        click.echo("Invalid format <username>/<gist-name>")
+    except Exception as ex:  # pylint: disable=broad-except
+        click.echo(f"Error: {ex}", err=True)
+        if verbose:
+            logging.exception("Detailed error:")
+
+
+if __name__ == "__main__":
+    main()  # pylint: disable=no-value-for-parameter
